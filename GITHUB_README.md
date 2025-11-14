@@ -326,11 +326,18 @@ That's it! Your bot is now forwarding messages with full admin controls.
 - **DEPLOYMENT_GUIDE.md** - Production setup
 - **ADMIN_SYSTEM_ARCHITECTURE.md** - Technical details
 
+## 🙏 Credits
+
+This project was created with support from **Phoenix (The Web Sensei)**
+- **Telegram:** [@ph0enix_web](https://t.me/ph0enix_web)
+- **Expertise:** Web Development & Telegram Bot Architecture
+
 ---
 
 **Version:** 1.0.0  
 **Status:** Production Ready ✅  
 **Last Updated:** January 2024  
-**Author:** Manus AI
+**Author:** Manus AI  
+**Owner:** ekenegodwins22-eng
 
 **Your Telegram Channel Forwarder Bot with Professional Admin Controls** 🎉

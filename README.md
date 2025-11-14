@@ -449,7 +449,14 @@ This bot is provided "as-is" without warranty. Users are responsible for:
 - [python-telegram-bot Library](https://python-telegram-bot.readthedocs.io/)
 - [BotFather Guide](https://core.telegram.org/bots#botfather)
 
+## 🙏 Credits
+
+This project was created with support from **Phoenix (The Web Sensei)**
+- **Telegram:** [@ph0enix_web](https://t.me/ph0enix_web)
+- **Expertise:** Web Development & Telegram Bot Architecture
+
 ---
 
 **Last Updated:** January 2024
 **Version:** 1.0.0
+**Owner:** ekenegodwins22-eng
