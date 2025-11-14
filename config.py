@@ -33,6 +33,14 @@ LOG_FILE = os.getenv("LOG_FILE", "forwarder_bot.log")
 REQUEST_TIMEOUT = 30  # Timeout for API requests in seconds
 CONNECT_TIMEOUT = 10  # Timeout for connection in seconds
 
+# Telethon Configuration (Owner Only for Historical Forwarding)
+TELETHON_API_ID = os.getenv("TELETHON_API_ID")
+TELETHON_API_HASH = os.getenv("TELETHON_API_HASH")
+TELETHON_SESSION_FILE = "owner_telethon.session"
+
+# Owner Configuration
+OWNER_ID = int(os.getenv("OWNER_ID", "0")) # Your Telegram User ID (e.g., 123456789)
+
 # Feature Flags
 FORWARD_HISTORICAL_MESSAGES = os.getenv("FORWARD_HISTORICAL_MESSAGES", "true").lower() == "true"
 FORWARD_REAL_TIME_MESSAGES = os.getenv("FORWARD_REAL_TIME_MESSAGES", "true").lower() == "true"
@@ -45,4 +53,12 @@ if SOURCE_CHANNEL_ID == -1001234567890:
     print("WARNING: SOURCE_CHANNEL_ID not configured. Please set SOURCE_CHANNEL_ID environment variable.")
 
 if DESTINATION_CHANNEL_ID == -1009876543210:
+    print("WARNING: DESTINATION_CHANNEL_ID not configured. Please set DESTINATION_CHANNEL_ID environment variable.")
+
+# Validation
+if BOT_TOKEN == "your_bot_token_here":
+    print("WARNING: BOT_TOKEN not configured. Please set BOT_TOKEN environment variable.")
+
+if OWNER_ID == 0:
+    print("WARNING: OWNER_ID not configured. Please set OWNER_ID environment variable to your Telegram User ID.")
     print("WARNING: DESTINATION_CHANNEL_ID not configured. Please set DESTINATION_CHANNEL_ID environment variable.")

@@ -44,6 +44,60 @@ class Database:
                 )
             """)
 
+            # Table for managing cloned bot instances
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS cloned_bots (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    bot_token TEXT NOT NULL UNIQUE,
+                    source_channel_id TEXT NOT NULL,
+                    destination_channel_id TEXT NOT NULL,
+                    owner_chat_id INTEGER NOT NULL,
+                    status TEXT DEFAULT 'pending',
+                    process_id INTEGER,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+
+            # Index for quick lookup by owner
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_owner_chat_id 
+                ON cloned_bots(owner_chat_id)
+            """)
+
+            # Index for quick lookup by status
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_status 
+                ON cloned_bots(status)
+            """)
+
+            # Table for managing cloned bot instances (Main Bot's database)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS cloned_bots (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    bot_token TEXT NOT NULL UNIQUE,
+                    source_channel_id TEXT NOT NULL,
+                    destination_channel_id TEXT NOT NULL,
+                    owner_chat_id INTEGER NOT NULL,
+                    status TEXT DEFAULT 'pending',
+                    process_id INTEGER,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+
+            # Index for quick lookup by owner
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_owner_chat_id 
+                ON cloned_bots(owner_chat_id)
+            """)
+
+            # Index for quick lookup by status
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_status 
+                ON cloned_bots(status)
+            """)
+
             # Table for bot state and configuration
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS bot_state (
@@ -52,6 +106,33 @@ class Database:
                     value TEXT,
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
+            """)
+
+            # Table for managing cloned bot instances (Main Bot's database)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS cloned_bots (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    bot_token TEXT NOT NULL UNIQUE,
+                    source_channel_id TEXT NOT NULL,
+                    destination_channel_id TEXT NOT NULL,
+                    owner_chat_id INTEGER NOT NULL,
+                    status TEXT DEFAULT 'pending',
+                    process_id INTEGER,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+
+            # Index for quick lookup by owner
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_owner_chat_id 
+                ON cloned_bots(owner_chat_id)
+            """)
+
+            # Index for quick lookup by status
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_status 
+                ON cloned_bots(status)
             """)
 
             # Table for tracking historical forwarding progress
@@ -67,6 +148,33 @@ class Database:
                 )
             """)
 
+            # Table for managing cloned bot instances (Main Bot's database)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS cloned_bots (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    bot_token TEXT NOT NULL UNIQUE,
+                    source_channel_id TEXT NOT NULL,
+                    destination_channel_id TEXT NOT NULL,
+                    owner_chat_id INTEGER NOT NULL,
+                    status TEXT DEFAULT 'pending',
+                    process_id INTEGER,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+
+            # Index for quick lookup by owner
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_owner_chat_id 
+                ON cloned_bots(owner_chat_id)
+            """)
+
+            # Index for quick lookup by status
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_status 
+                ON cloned_bots(status)
+            """)
+
             # Table for error logging
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS error_log (
@@ -78,10 +186,64 @@ class Database:
                 )
             """)
 
+            # Table for managing cloned bot instances (Main Bot's database)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS cloned_bots (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    bot_token TEXT NOT NULL UNIQUE,
+                    source_channel_id TEXT NOT NULL,
+                    destination_channel_id TEXT NOT NULL,
+                    owner_chat_id INTEGER NOT NULL,
+                    status TEXT DEFAULT 'pending',
+                    process_id INTEGER,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+
+            # Index for quick lookup by owner
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_owner_chat_id 
+                ON cloned_bots(owner_chat_id)
+            """)
+
+            # Index for quick lookup by status
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_status 
+                ON cloned_bots(status)
+            """)
+
             # Create indexes for better query performance
             cursor.execute("""
                 CREATE INDEX IF NOT EXISTS idx_source_message_id 
                 ON forwarded_messages(source_message_id)
+            """)
+
+            # Table for managing cloned bot instances (Main Bot's database)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS cloned_bots (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    bot_token TEXT NOT NULL UNIQUE,
+                    source_channel_id TEXT NOT NULL,
+                    destination_channel_id TEXT NOT NULL,
+                    owner_chat_id INTEGER NOT NULL,
+                    status TEXT DEFAULT 'pending',
+                    process_id INTEGER,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+
+            # Index for quick lookup by owner
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_owner_chat_id 
+                ON cloned_bots(owner_chat_id)
+            """)
+
+            # Index for quick lookup by status
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_status 
+                ON cloned_bots(status)
             """)
 
             cursor.execute("""
@@ -89,11 +251,312 @@ class Database:
                 ON forwarded_messages(forwarded_at)
             """)
 
+            # Table for managing cloned bot instances (Main Bot's database)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS cloned_bots (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    bot_token TEXT NOT NULL UNIQUE,
+                    source_channel_id TEXT NOT NULL,
+                    destination_channel_id TEXT NOT NULL,
+                    owner_chat_id INTEGER NOT NULL,
+                    status TEXT DEFAULT 'pending',
+                    process_id INTEGER,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+
+            # Index for quick lookup by owner
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_owner_chat_id 
+                ON cloned_bots(owner_chat_id)
+            """)
+
+            # Index for quick lookup by status
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_status 
+                ON cloned_bots(status)
+            """)
+
             conn.commit()
             logger.info("Database initialized successfully")
         except sqlite3.Error as e:
             logger.error(f"Database initialization error: {e}")
             conn.rollback()
+        finally:
+            conn.close()
+
+    def add_cloned_bot(
+        self,
+        bot_token: str,
+        source_channel_id: str,
+        destination_channel_id: str,
+        owner_chat_id: int
+    ) -> Optional[int]:
+        """Add a new cloned bot configuration to the database"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("""
+                INSERT INTO cloned_bots 
+                (bot_token, source_channel_id, destination_channel_id, owner_chat_id, status)
+                VALUES (?, ?, ?, ?, 'pending')
+            """, (bot_token, source_channel_id, destination_channel_id, owner_chat_id))
+            conn.commit()
+            logger.info(f"Added new cloned bot config for owner {owner_chat_id}")
+            return cursor.lastrowid
+        except sqlite3.IntegrityError:
+            logger.warning(f"Bot with token {bot_token} already exists.")
+            return None
+        except sqlite3.Error as e:
+            logger.error(f"Error adding cloned bot: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots(self, status: Optional[str] = None) -> List[dict]:
+        """Get a list of all cloned bots, optionally filtered by status"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        query = "SELECT * FROM cloned_bots"
+        params: List[str] = []
+        
+        if status:
+            query += " WHERE status = ?"
+            params.append(status)
+            
+        try:
+            cursor.execute(query, params)
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def get_cloned_bot_by_id(self, bot_id: int) -> Optional[dict]:
+        """Get a cloned bot configuration by its ID"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE id = ?", (bot_id,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot by ID: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def update_cloned_bot_status(self, bot_id: int, status: str, process_id: Optional[int] = None) -> bool:
+        """Update the status and process ID of a cloned bot"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            if process_id is not None:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, process_id = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, process_id, bot_id))
+            else:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, bot_id))
+            conn.commit()
+            return True
+        except sqlite3.Error as e:
+            logger.error(f"Error updating cloned bot status: {e}")
+            return False
+        finally:
+            conn.close()
+
+    def get_cloned_bot_config(self, bot_token: str) -> Optional[dict]:
+        """Get a cloned bot configuration by its token"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE bot_token = ?", (bot_token,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot config by token: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots_by_owner(self, owner_chat_id: int) -> List[dict]:
+        """Get all cloned bots owned by a specific user"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE owner_chat_id = ?", (owner_chat_id,))
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots by owner: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def delete_cloned_bot(self, bot_id: int) -> bool:
+        """Delete a cloned bot configuration"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("DELETE FROM cloned_bots WHERE id = ?", (bot_id,))
+            conn.commit()
+            return cursor.rowcount > 0
+        except sqlite3.Error as e:
+            logger.error(f"Error deleting cloned bot: {e}")
+            return False
+        finally:
+            conn.close()
+
+    def add_cloned_bot(
+        self,
+        bot_token: str,
+        source_channel_id: str,
+        destination_channel_id: str,
+        owner_chat_id: int
+    ) -> Optional[int]:
+        """Add a new cloned bot configuration to the database"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("""
+                INSERT INTO cloned_bots 
+                (bot_token, source_channel_id, destination_channel_id, owner_chat_id, status)
+                VALUES (?, ?, ?, ?, 'pending')
+            """, (bot_token, source_channel_id, destination_channel_id, owner_chat_id))
+            conn.commit()
+            logger.info(f"Added new cloned bot config for owner {owner_chat_id}")
+            return cursor.lastrowid
+        except sqlite3.IntegrityError:
+            logger.warning(f"Bot with token {bot_token} already exists.")
+            return None
+        except sqlite3.Error as e:
+            logger.error(f"Error adding cloned bot: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots(self, status: Optional[str] = None) -> List[dict]:
+        """Get a list of all cloned bots, optionally filtered by status"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        query = "SELECT * FROM cloned_bots"
+        params: List[str] = []
+        
+        if status:
+            query += " WHERE status = ?"
+            params.append(status)
+            
+        try:
+            cursor.execute(query, params)
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def get_cloned_bot_by_id(self, bot_id: int) -> Optional[dict]:
+        """Get a cloned bot configuration by its ID"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE id = ?", (bot_id,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot by ID: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def update_cloned_bot_status(self, bot_id: int, status: str, process_id: Optional[int] = None) -> bool:
+        """Update the status and process ID of a cloned bot"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            if process_id is not None:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, process_id = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, process_id, bot_id))
+            else:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, bot_id))
+            conn.commit()
+            return True
+        except sqlite3.Error as e:
+            logger.error(f"Error updating cloned bot status: {e}")
+            return False
+        finally:
+            conn.close()
+
+    def get_cloned_bot_config(self, bot_token: str) -> Optional[dict]:
+        """Get a cloned bot configuration by its token"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE bot_token = ?", (bot_token,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot config by token: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots_by_owner(self, owner_chat_id: int) -> List[dict]:
+        """Get all cloned bots owned by a specific user"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE owner_chat_id = ?", (owner_chat_id,))
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots by owner: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def delete_cloned_bot(self, bot_id: int) -> bool:
+        """Delete a cloned bot configuration"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("DELETE FROM cloned_bots WHERE id = ?", (bot_id,))
+            conn.commit()
+            return cursor.rowcount > 0
+        except sqlite3.Error as e:
+            logger.error(f"Error deleting cloned bot: {e}")
+            return False
         finally:
             conn.close()
 
@@ -126,6 +589,143 @@ class Database:
         finally:
             conn.close()
 
+    def add_cloned_bot(
+        self,
+        bot_token: str,
+        source_channel_id: str,
+        destination_channel_id: str,
+        owner_chat_id: int
+    ) -> Optional[int]:
+        """Add a new cloned bot configuration to the database"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("""
+                INSERT INTO cloned_bots 
+                (bot_token, source_channel_id, destination_channel_id, owner_chat_id, status)
+                VALUES (?, ?, ?, ?, 'pending')
+            """, (bot_token, source_channel_id, destination_channel_id, owner_chat_id))
+            conn.commit()
+            logger.info(f"Added new cloned bot config for owner {owner_chat_id}")
+            return cursor.lastrowid
+        except sqlite3.IntegrityError:
+            logger.warning(f"Bot with token {bot_token} already exists.")
+            return None
+        except sqlite3.Error as e:
+            logger.error(f"Error adding cloned bot: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots(self, status: Optional[str] = None) -> List[dict]:
+        """Get a list of all cloned bots, optionally filtered by status"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        query = "SELECT * FROM cloned_bots"
+        params: List[str] = []
+        
+        if status:
+            query += " WHERE status = ?"
+            params.append(status)
+            
+        try:
+            cursor.execute(query, params)
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def get_cloned_bot_by_id(self, bot_id: int) -> Optional[dict]:
+        """Get a cloned bot configuration by its ID"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE id = ?", (bot_id,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot by ID: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def update_cloned_bot_status(self, bot_id: int, status: str, process_id: Optional[int] = None) -> bool:
+        """Update the status and process ID of a cloned bot"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            if process_id is not None:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, process_id = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, process_id, bot_id))
+            else:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, bot_id))
+            conn.commit()
+            return True
+        except sqlite3.Error as e:
+            logger.error(f"Error updating cloned bot status: {e}")
+            return False
+        finally:
+            conn.close()
+
+    def get_cloned_bot_config(self, bot_token: str) -> Optional[dict]:
+        """Get a cloned bot configuration by its token"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE bot_token = ?", (bot_token,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot config by token: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots_by_owner(self, owner_chat_id: int) -> List[dict]:
+        """Get all cloned bots owned by a specific user"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE owner_chat_id = ?", (owner_chat_id,))
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots by owner: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def delete_cloned_bot(self, bot_id: int) -> bool:
+        """Delete a cloned bot configuration"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("DELETE FROM cloned_bots WHERE id = ?", (bot_id,))
+            conn.commit()
+            return cursor.rowcount > 0
+        except sqlite3.Error as e:
+            logger.error(f"Error deleting cloned bot: {e}")
+            return False
+        finally:
+            conn.close()
+
     def is_message_forwarded(self, source_message_id: int) -> bool:
         """Check if a message has already been forwarded"""
         conn = self.get_connection()
@@ -144,6 +744,143 @@ class Database:
         finally:
             conn.close()
 
+    def add_cloned_bot(
+        self,
+        bot_token: str,
+        source_channel_id: str,
+        destination_channel_id: str,
+        owner_chat_id: int
+    ) -> Optional[int]:
+        """Add a new cloned bot configuration to the database"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("""
+                INSERT INTO cloned_bots 
+                (bot_token, source_channel_id, destination_channel_id, owner_chat_id, status)
+                VALUES (?, ?, ?, ?, 'pending')
+            """, (bot_token, source_channel_id, destination_channel_id, owner_chat_id))
+            conn.commit()
+            logger.info(f"Added new cloned bot config for owner {owner_chat_id}")
+            return cursor.lastrowid
+        except sqlite3.IntegrityError:
+            logger.warning(f"Bot with token {bot_token} already exists.")
+            return None
+        except sqlite3.Error as e:
+            logger.error(f"Error adding cloned bot: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots(self, status: Optional[str] = None) -> List[dict]:
+        """Get a list of all cloned bots, optionally filtered by status"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        query = "SELECT * FROM cloned_bots"
+        params: List[str] = []
+        
+        if status:
+            query += " WHERE status = ?"
+            params.append(status)
+            
+        try:
+            cursor.execute(query, params)
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def get_cloned_bot_by_id(self, bot_id: int) -> Optional[dict]:
+        """Get a cloned bot configuration by its ID"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE id = ?", (bot_id,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot by ID: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def update_cloned_bot_status(self, bot_id: int, status: str, process_id: Optional[int] = None) -> bool:
+        """Update the status and process ID of a cloned bot"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            if process_id is not None:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, process_id = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, process_id, bot_id))
+            else:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, bot_id))
+            conn.commit()
+            return True
+        except sqlite3.Error as e:
+            logger.error(f"Error updating cloned bot status: {e}")
+            return False
+        finally:
+            conn.close()
+
+    def get_cloned_bot_config(self, bot_token: str) -> Optional[dict]:
+        """Get a cloned bot configuration by its token"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE bot_token = ?", (bot_token,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot config by token: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots_by_owner(self, owner_chat_id: int) -> List[dict]:
+        """Get all cloned bots owned by a specific user"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE owner_chat_id = ?", (owner_chat_id,))
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots by owner: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def delete_cloned_bot(self, bot_id: int) -> bool:
+        """Delete a cloned bot configuration"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("DELETE FROM cloned_bots WHERE id = ?", (bot_id,))
+            conn.commit()
+            return cursor.rowcount > 0
+        except sqlite3.Error as e:
+            logger.error(f"Error deleting cloned bot: {e}")
+            return False
+        finally:
+            conn.close()
+
     def get_forwarding_progress(self) -> Optional[dict]:
         """Get the current forwarding progress"""
         conn = self.get_connection()
@@ -154,6 +891,33 @@ class Database:
                 SELECT * FROM forwarding_progress 
                 ORDER BY id DESC LIMIT 1
             """)
+
+            # Table for managing cloned bot instances (Main Bot's database)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS cloned_bots (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    bot_token TEXT NOT NULL UNIQUE,
+                    source_channel_id TEXT NOT NULL,
+                    destination_channel_id TEXT NOT NULL,
+                    owner_chat_id INTEGER NOT NULL,
+                    status TEXT DEFAULT 'pending',
+                    process_id INTEGER,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+
+            # Index for quick lookup by owner
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_owner_chat_id 
+                ON cloned_bots(owner_chat_id)
+            """)
+
+            # Index for quick lookup by status
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_status 
+                ON cloned_bots(status)
+            """)
             row = cursor.fetchone()
             if row:
                 return dict(row)
@@ -161,6 +925,143 @@ class Database:
         except sqlite3.Error as e:
             logger.error(f"Error getting forwarding progress: {e}")
             return None
+        finally:
+            conn.close()
+
+    def add_cloned_bot(
+        self,
+        bot_token: str,
+        source_channel_id: str,
+        destination_channel_id: str,
+        owner_chat_id: int
+    ) -> Optional[int]:
+        """Add a new cloned bot configuration to the database"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("""
+                INSERT INTO cloned_bots 
+                (bot_token, source_channel_id, destination_channel_id, owner_chat_id, status)
+                VALUES (?, ?, ?, ?, 'pending')
+            """, (bot_token, source_channel_id, destination_channel_id, owner_chat_id))
+            conn.commit()
+            logger.info(f"Added new cloned bot config for owner {owner_chat_id}")
+            return cursor.lastrowid
+        except sqlite3.IntegrityError:
+            logger.warning(f"Bot with token {bot_token} already exists.")
+            return None
+        except sqlite3.Error as e:
+            logger.error(f"Error adding cloned bot: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots(self, status: Optional[str] = None) -> List[dict]:
+        """Get a list of all cloned bots, optionally filtered by status"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        query = "SELECT * FROM cloned_bots"
+        params: List[str] = []
+        
+        if status:
+            query += " WHERE status = ?"
+            params.append(status)
+            
+        try:
+            cursor.execute(query, params)
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def get_cloned_bot_by_id(self, bot_id: int) -> Optional[dict]:
+        """Get a cloned bot configuration by its ID"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE id = ?", (bot_id,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot by ID: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def update_cloned_bot_status(self, bot_id: int, status: str, process_id: Optional[int] = None) -> bool:
+        """Update the status and process ID of a cloned bot"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            if process_id is not None:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, process_id = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, process_id, bot_id))
+            else:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, bot_id))
+            conn.commit()
+            return True
+        except sqlite3.Error as e:
+            logger.error(f"Error updating cloned bot status: {e}")
+            return False
+        finally:
+            conn.close()
+
+    def get_cloned_bot_config(self, bot_token: str) -> Optional[dict]:
+        """Get a cloned bot configuration by its token"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE bot_token = ?", (bot_token,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot config by token: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots_by_owner(self, owner_chat_id: int) -> List[dict]:
+        """Get all cloned bots owned by a specific user"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE owner_chat_id = ?", (owner_chat_id,))
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots by owner: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def delete_cloned_bot(self, bot_id: int) -> bool:
+        """Delete a cloned bot configuration"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("DELETE FROM cloned_bots WHERE id = ?", (bot_id,))
+            conn.commit()
+            return cursor.rowcount > 0
+        except sqlite3.Error as e:
+            logger.error(f"Error deleting cloned bot: {e}")
+            return False
         finally:
             conn.close()
 
@@ -204,6 +1105,33 @@ class Database:
                     SET completed_at = CURRENT_TIMESTAMP
                     WHERE id = (SELECT MAX(id) FROM forwarding_progress)
                 """)
+
+            # Table for managing cloned bot instances (Main Bot's database)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS cloned_bots (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    bot_token TEXT NOT NULL UNIQUE,
+                    source_channel_id TEXT NOT NULL,
+                    destination_channel_id TEXT NOT NULL,
+                    owner_chat_id INTEGER NOT NULL,
+                    status TEXT DEFAULT 'pending',
+                    process_id INTEGER,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+
+            # Index for quick lookup by owner
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_owner_chat_id 
+                ON cloned_bots(owner_chat_id)
+            """)
+
+            # Index for quick lookup by status
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_status 
+                ON cloned_bots(status)
+            """)
             
             conn.commit()
             logger.debug(f"Updated forwarding progress: {total_messages_forwarded} messages")
@@ -211,6 +1139,143 @@ class Database:
         except sqlite3.Error as e:
             logger.error(f"Error updating forwarding progress: {e}")
             conn.rollback()
+            return False
+        finally:
+            conn.close()
+
+    def add_cloned_bot(
+        self,
+        bot_token: str,
+        source_channel_id: str,
+        destination_channel_id: str,
+        owner_chat_id: int
+    ) -> Optional[int]:
+        """Add a new cloned bot configuration to the database"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("""
+                INSERT INTO cloned_bots 
+                (bot_token, source_channel_id, destination_channel_id, owner_chat_id, status)
+                VALUES (?, ?, ?, ?, 'pending')
+            """, (bot_token, source_channel_id, destination_channel_id, owner_chat_id))
+            conn.commit()
+            logger.info(f"Added new cloned bot config for owner {owner_chat_id}")
+            return cursor.lastrowid
+        except sqlite3.IntegrityError:
+            logger.warning(f"Bot with token {bot_token} already exists.")
+            return None
+        except sqlite3.Error as e:
+            logger.error(f"Error adding cloned bot: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots(self, status: Optional[str] = None) -> List[dict]:
+        """Get a list of all cloned bots, optionally filtered by status"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        query = "SELECT * FROM cloned_bots"
+        params: List[str] = []
+        
+        if status:
+            query += " WHERE status = ?"
+            params.append(status)
+            
+        try:
+            cursor.execute(query, params)
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def get_cloned_bot_by_id(self, bot_id: int) -> Optional[dict]:
+        """Get a cloned bot configuration by its ID"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE id = ?", (bot_id,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot by ID: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def update_cloned_bot_status(self, bot_id: int, status: str, process_id: Optional[int] = None) -> bool:
+        """Update the status and process ID of a cloned bot"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            if process_id is not None:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, process_id = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, process_id, bot_id))
+            else:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, bot_id))
+            conn.commit()
+            return True
+        except sqlite3.Error as e:
+            logger.error(f"Error updating cloned bot status: {e}")
+            return False
+        finally:
+            conn.close()
+
+    def get_cloned_bot_config(self, bot_token: str) -> Optional[dict]:
+        """Get a cloned bot configuration by its token"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE bot_token = ?", (bot_token,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot config by token: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots_by_owner(self, owner_chat_id: int) -> List[dict]:
+        """Get all cloned bots owned by a specific user"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE owner_chat_id = ?", (owner_chat_id,))
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots by owner: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def delete_cloned_bot(self, bot_id: int) -> bool:
+        """Delete a cloned bot configuration"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("DELETE FROM cloned_bots WHERE id = ?", (bot_id,))
+            conn.commit()
+            return cursor.rowcount > 0
+        except sqlite3.Error as e:
+            logger.error(f"Error deleting cloned bot: {e}")
             return False
         finally:
             conn.close()
@@ -233,6 +1298,143 @@ class Database:
         finally:
             conn.close()
 
+    def add_cloned_bot(
+        self,
+        bot_token: str,
+        source_channel_id: str,
+        destination_channel_id: str,
+        owner_chat_id: int
+    ) -> Optional[int]:
+        """Add a new cloned bot configuration to the database"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("""
+                INSERT INTO cloned_bots 
+                (bot_token, source_channel_id, destination_channel_id, owner_chat_id, status)
+                VALUES (?, ?, ?, ?, 'pending')
+            """, (bot_token, source_channel_id, destination_channel_id, owner_chat_id))
+            conn.commit()
+            logger.info(f"Added new cloned bot config for owner {owner_chat_id}")
+            return cursor.lastrowid
+        except sqlite3.IntegrityError:
+            logger.warning(f"Bot with token {bot_token} already exists.")
+            return None
+        except sqlite3.Error as e:
+            logger.error(f"Error adding cloned bot: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots(self, status: Optional[str] = None) -> List[dict]:
+        """Get a list of all cloned bots, optionally filtered by status"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        query = "SELECT * FROM cloned_bots"
+        params: List[str] = []
+        
+        if status:
+            query += " WHERE status = ?"
+            params.append(status)
+            
+        try:
+            cursor.execute(query, params)
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def get_cloned_bot_by_id(self, bot_id: int) -> Optional[dict]:
+        """Get a cloned bot configuration by its ID"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE id = ?", (bot_id,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot by ID: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def update_cloned_bot_status(self, bot_id: int, status: str, process_id: Optional[int] = None) -> bool:
+        """Update the status and process ID of a cloned bot"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            if process_id is not None:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, process_id = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, process_id, bot_id))
+            else:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, bot_id))
+            conn.commit()
+            return True
+        except sqlite3.Error as e:
+            logger.error(f"Error updating cloned bot status: {e}")
+            return False
+        finally:
+            conn.close()
+
+    def get_cloned_bot_config(self, bot_token: str) -> Optional[dict]:
+        """Get a cloned bot configuration by its token"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE bot_token = ?", (bot_token,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot config by token: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots_by_owner(self, owner_chat_id: int) -> List[dict]:
+        """Get all cloned bots owned by a specific user"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE owner_chat_id = ?", (owner_chat_id,))
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots by owner: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def delete_cloned_bot(self, bot_id: int) -> bool:
+        """Delete a cloned bot configuration"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("DELETE FROM cloned_bots WHERE id = ?", (bot_id,))
+            conn.commit()
+            return cursor.rowcount > 0
+        except sqlite3.Error as e:
+            logger.error(f"Error deleting cloned bot: {e}")
+            return False
+        finally:
+            conn.close()
+
     def get_state(self, key: str) -> Optional[str]:
         """Get a bot state value"""
         conn = self.get_connection()
@@ -245,6 +1447,143 @@ class Database:
         except sqlite3.Error as e:
             logger.error(f"Error getting state: {e}")
             return None
+        finally:
+            conn.close()
+
+    def add_cloned_bot(
+        self,
+        bot_token: str,
+        source_channel_id: str,
+        destination_channel_id: str,
+        owner_chat_id: int
+    ) -> Optional[int]:
+        """Add a new cloned bot configuration to the database"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("""
+                INSERT INTO cloned_bots 
+                (bot_token, source_channel_id, destination_channel_id, owner_chat_id, status)
+                VALUES (?, ?, ?, ?, 'pending')
+            """, (bot_token, source_channel_id, destination_channel_id, owner_chat_id))
+            conn.commit()
+            logger.info(f"Added new cloned bot config for owner {owner_chat_id}")
+            return cursor.lastrowid
+        except sqlite3.IntegrityError:
+            logger.warning(f"Bot with token {bot_token} already exists.")
+            return None
+        except sqlite3.Error as e:
+            logger.error(f"Error adding cloned bot: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots(self, status: Optional[str] = None) -> List[dict]:
+        """Get a list of all cloned bots, optionally filtered by status"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        query = "SELECT * FROM cloned_bots"
+        params: List[str] = []
+        
+        if status:
+            query += " WHERE status = ?"
+            params.append(status)
+            
+        try:
+            cursor.execute(query, params)
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def get_cloned_bot_by_id(self, bot_id: int) -> Optional[dict]:
+        """Get a cloned bot configuration by its ID"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE id = ?", (bot_id,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot by ID: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def update_cloned_bot_status(self, bot_id: int, status: str, process_id: Optional[int] = None) -> bool:
+        """Update the status and process ID of a cloned bot"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            if process_id is not None:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, process_id = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, process_id, bot_id))
+            else:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, bot_id))
+            conn.commit()
+            return True
+        except sqlite3.Error as e:
+            logger.error(f"Error updating cloned bot status: {e}")
+            return False
+        finally:
+            conn.close()
+
+    def get_cloned_bot_config(self, bot_token: str) -> Optional[dict]:
+        """Get a cloned bot configuration by its token"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE bot_token = ?", (bot_token,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot config by token: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots_by_owner(self, owner_chat_id: int) -> List[dict]:
+        """Get all cloned bots owned by a specific user"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE owner_chat_id = ?", (owner_chat_id,))
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots by owner: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def delete_cloned_bot(self, bot_id: int) -> bool:
+        """Delete a cloned bot configuration"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("DELETE FROM cloned_bots WHERE id = ?", (bot_id,))
+            conn.commit()
+            return cursor.rowcount > 0
+        except sqlite3.Error as e:
+            logger.error(f"Error deleting cloned bot: {e}")
+            return False
         finally:
             conn.close()
 
@@ -271,6 +1610,143 @@ class Database:
         finally:
             conn.close()
 
+    def add_cloned_bot(
+        self,
+        bot_token: str,
+        source_channel_id: str,
+        destination_channel_id: str,
+        owner_chat_id: int
+    ) -> Optional[int]:
+        """Add a new cloned bot configuration to the database"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("""
+                INSERT INTO cloned_bots 
+                (bot_token, source_channel_id, destination_channel_id, owner_chat_id, status)
+                VALUES (?, ?, ?, ?, 'pending')
+            """, (bot_token, source_channel_id, destination_channel_id, owner_chat_id))
+            conn.commit()
+            logger.info(f"Added new cloned bot config for owner {owner_chat_id}")
+            return cursor.lastrowid
+        except sqlite3.IntegrityError:
+            logger.warning(f"Bot with token {bot_token} already exists.")
+            return None
+        except sqlite3.Error as e:
+            logger.error(f"Error adding cloned bot: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots(self, status: Optional[str] = None) -> List[dict]:
+        """Get a list of all cloned bots, optionally filtered by status"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        query = "SELECT * FROM cloned_bots"
+        params: List[str] = []
+        
+        if status:
+            query += " WHERE status = ?"
+            params.append(status)
+            
+        try:
+            cursor.execute(query, params)
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def get_cloned_bot_by_id(self, bot_id: int) -> Optional[dict]:
+        """Get a cloned bot configuration by its ID"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE id = ?", (bot_id,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot by ID: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def update_cloned_bot_status(self, bot_id: int, status: str, process_id: Optional[int] = None) -> bool:
+        """Update the status and process ID of a cloned bot"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            if process_id is not None:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, process_id = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, process_id, bot_id))
+            else:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, bot_id))
+            conn.commit()
+            return True
+        except sqlite3.Error as e:
+            logger.error(f"Error updating cloned bot status: {e}")
+            return False
+        finally:
+            conn.close()
+
+    def get_cloned_bot_config(self, bot_token: str) -> Optional[dict]:
+        """Get a cloned bot configuration by its token"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE bot_token = ?", (bot_token,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot config by token: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots_by_owner(self, owner_chat_id: int) -> List[dict]:
+        """Get all cloned bots owned by a specific user"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE owner_chat_id = ?", (owner_chat_id,))
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots by owner: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def delete_cloned_bot(self, bot_id: int) -> bool:
+        """Delete a cloned bot configuration"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("DELETE FROM cloned_bots WHERE id = ?", (bot_id,))
+            conn.commit()
+            return cursor.rowcount > 0
+        except sqlite3.Error as e:
+            logger.error(f"Error deleting cloned bot: {e}")
+            return False
+        finally:
+            conn.close()
+
     def get_forwarded_count(self) -> int:
         """Get total number of forwarded messages"""
         conn = self.get_connection()
@@ -283,6 +1759,143 @@ class Database:
         except sqlite3.Error as e:
             logger.error(f"Error getting forwarded count: {e}")
             return 0
+        finally:
+            conn.close()
+
+    def add_cloned_bot(
+        self,
+        bot_token: str,
+        source_channel_id: str,
+        destination_channel_id: str,
+        owner_chat_id: int
+    ) -> Optional[int]:
+        """Add a new cloned bot configuration to the database"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("""
+                INSERT INTO cloned_bots 
+                (bot_token, source_channel_id, destination_channel_id, owner_chat_id, status)
+                VALUES (?, ?, ?, ?, 'pending')
+            """, (bot_token, source_channel_id, destination_channel_id, owner_chat_id))
+            conn.commit()
+            logger.info(f"Added new cloned bot config for owner {owner_chat_id}")
+            return cursor.lastrowid
+        except sqlite3.IntegrityError:
+            logger.warning(f"Bot with token {bot_token} already exists.")
+            return None
+        except sqlite3.Error as e:
+            logger.error(f"Error adding cloned bot: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots(self, status: Optional[str] = None) -> List[dict]:
+        """Get a list of all cloned bots, optionally filtered by status"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        query = "SELECT * FROM cloned_bots"
+        params: List[str] = []
+        
+        if status:
+            query += " WHERE status = ?"
+            params.append(status)
+            
+        try:
+            cursor.execute(query, params)
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def get_cloned_bot_by_id(self, bot_id: int) -> Optional[dict]:
+        """Get a cloned bot configuration by its ID"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE id = ?", (bot_id,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot by ID: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def update_cloned_bot_status(self, bot_id: int, status: str, process_id: Optional[int] = None) -> bool:
+        """Update the status and process ID of a cloned bot"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            if process_id is not None:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, process_id = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, process_id, bot_id))
+            else:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, bot_id))
+            conn.commit()
+            return True
+        except sqlite3.Error as e:
+            logger.error(f"Error updating cloned bot status: {e}")
+            return False
+        finally:
+            conn.close()
+
+    def get_cloned_bot_config(self, bot_token: str) -> Optional[dict]:
+        """Get a cloned bot configuration by its token"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE bot_token = ?", (bot_token,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot config by token: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots_by_owner(self, owner_chat_id: int) -> List[dict]:
+        """Get all cloned bots owned by a specific user"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE owner_chat_id = ?", (owner_chat_id,))
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots by owner: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def delete_cloned_bot(self, bot_id: int) -> bool:
+        """Delete a cloned bot configuration"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("DELETE FROM cloned_bots WHERE id = ?", (bot_id,))
+            conn.commit()
+            return cursor.rowcount > 0
+        except sqlite3.Error as e:
+            logger.error(f"Error deleting cloned bot: {e}")
+            return False
         finally:
             conn.close()
 
@@ -301,6 +1914,143 @@ class Database:
         finally:
             conn.close()
 
+    def add_cloned_bot(
+        self,
+        bot_token: str,
+        source_channel_id: str,
+        destination_channel_id: str,
+        owner_chat_id: int
+    ) -> Optional[int]:
+        """Add a new cloned bot configuration to the database"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("""
+                INSERT INTO cloned_bots 
+                (bot_token, source_channel_id, destination_channel_id, owner_chat_id, status)
+                VALUES (?, ?, ?, ?, 'pending')
+            """, (bot_token, source_channel_id, destination_channel_id, owner_chat_id))
+            conn.commit()
+            logger.info(f"Added new cloned bot config for owner {owner_chat_id}")
+            return cursor.lastrowid
+        except sqlite3.IntegrityError:
+            logger.warning(f"Bot with token {bot_token} already exists.")
+            return None
+        except sqlite3.Error as e:
+            logger.error(f"Error adding cloned bot: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots(self, status: Optional[str] = None) -> List[dict]:
+        """Get a list of all cloned bots, optionally filtered by status"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        query = "SELECT * FROM cloned_bots"
+        params: List[str] = []
+        
+        if status:
+            query += " WHERE status = ?"
+            params.append(status)
+            
+        try:
+            cursor.execute(query, params)
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def get_cloned_bot_by_id(self, bot_id: int) -> Optional[dict]:
+        """Get a cloned bot configuration by its ID"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE id = ?", (bot_id,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot by ID: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def update_cloned_bot_status(self, bot_id: int, status: str, process_id: Optional[int] = None) -> bool:
+        """Update the status and process ID of a cloned bot"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            if process_id is not None:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, process_id = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, process_id, bot_id))
+            else:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, bot_id))
+            conn.commit()
+            return True
+        except sqlite3.Error as e:
+            logger.error(f"Error updating cloned bot status: {e}")
+            return False
+        finally:
+            conn.close()
+
+    def get_cloned_bot_config(self, bot_token: str) -> Optional[dict]:
+        """Get a cloned bot configuration by its token"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE bot_token = ?", (bot_token,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot config by token: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots_by_owner(self, owner_chat_id: int) -> List[dict]:
+        """Get all cloned bots owned by a specific user"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE owner_chat_id = ?", (owner_chat_id,))
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots by owner: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def delete_cloned_bot(self, bot_id: int) -> bool:
+        """Delete a cloned bot configuration"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("DELETE FROM cloned_bots WHERE id = ?", (bot_id,))
+            conn.commit()
+            return cursor.rowcount > 0
+        except sqlite3.Error as e:
+            logger.error(f"Error deleting cloned bot: {e}")
+            return False
+        finally:
+            conn.close()
+
     def get_recent_errors(self, limit: int = 10) -> List[dict]:
         """Get recent errors"""
         conn = self.get_connection()
@@ -316,5 +2066,142 @@ class Database:
         except sqlite3.Error as e:
             logger.error(f"Error getting recent errors: {e}")
             return []
+        finally:
+            conn.close()
+
+    def add_cloned_bot(
+        self,
+        bot_token: str,
+        source_channel_id: str,
+        destination_channel_id: str,
+        owner_chat_id: int
+    ) -> Optional[int]:
+        """Add a new cloned bot configuration to the database"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("""
+                INSERT INTO cloned_bots 
+                (bot_token, source_channel_id, destination_channel_id, owner_chat_id, status)
+                VALUES (?, ?, ?, ?, 'pending')
+            """, (bot_token, source_channel_id, destination_channel_id, owner_chat_id))
+            conn.commit()
+            logger.info(f"Added new cloned bot config for owner {owner_chat_id}")
+            return cursor.lastrowid
+        except sqlite3.IntegrityError:
+            logger.warning(f"Bot with token {bot_token} already exists.")
+            return None
+        except sqlite3.Error as e:
+            logger.error(f"Error adding cloned bot: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots(self, status: Optional[str] = None) -> List[dict]:
+        """Get a list of all cloned bots, optionally filtered by status"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        query = "SELECT * FROM cloned_bots"
+        params: List[str] = []
+        
+        if status:
+            query += " WHERE status = ?"
+            params.append(status)
+            
+        try:
+            cursor.execute(query, params)
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def get_cloned_bot_by_id(self, bot_id: int) -> Optional[dict]:
+        """Get a cloned bot configuration by its ID"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE id = ?", (bot_id,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot by ID: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def update_cloned_bot_status(self, bot_id: int, status: str, process_id: Optional[int] = None) -> bool:
+        """Update the status and process ID of a cloned bot"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            if process_id is not None:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, process_id = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, process_id, bot_id))
+            else:
+                cursor.execute("""
+                    UPDATE cloned_bots 
+                    SET status = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                """, (status, bot_id))
+            conn.commit()
+            return True
+        except sqlite3.Error as e:
+            logger.error(f"Error updating cloned bot status: {e}")
+            return False
+        finally:
+            conn.close()
+
+    def get_cloned_bot_config(self, bot_token: str) -> Optional[dict]:
+        """Get a cloned bot configuration by its token"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE bot_token = ?", (bot_token,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bot config by token: {e}")
+            return None
+        finally:
+            conn.close()
+
+    def get_cloned_bots_by_owner(self, owner_chat_id: int) -> List[dict]:
+        """Get all cloned bots owned by a specific user"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM cloned_bots WHERE owner_chat_id = ?", (owner_chat_id,))
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+        except sqlite3.Error as e:
+            logger.error(f"Error getting cloned bots by owner: {e}")
+            return []
+        finally:
+            conn.close()
+
+    def delete_cloned_bot(self, bot_id: int) -> bool:
+        """Delete a cloned bot configuration"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("DELETE FROM cloned_bots WHERE id = ?", (bot_id,))
+            conn.commit()
+            return cursor.rowcount > 0
+        except sqlite3.Error as e:
+            logger.error(f"Error deleting cloned bot: {e}")
+            return False
         finally:
             conn.close()

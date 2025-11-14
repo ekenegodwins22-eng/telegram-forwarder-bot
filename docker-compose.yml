@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # --- Standard Bot Service (Real-time Forwarding) ---
+  bot-standard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: telegram-forwarder-standard
+    command: python bot.py
+    env_file:
+      - .env
+    volumes:
+      # Persistent volume for the SQLite database and logs
+      - bot_data:/app/data
+    restart: unless-stopped
+    networks:
+      - bot-network
+
+  # --- Telethon Bot Service (Historical and Real-time Forwarding) ---
+  # NOTE: This service requires the .session file to be present in the volume
+  # See TELETHON_SETUP.md for instructions on generating the session file.
+  bot-telethon:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: telegram-forwarder-telethon
+    command: python bot_telethon.py
+    env_file:
+      - .env
+    volumes:
+      # Persistent volume for the SQLite database, logs, and Telethon session file
+      - bot_data:/app/data
+    restart: unless-stopped
+    networks:
+      - bot-network
+
+  # --- Admin Dashboard Service (Optional, if implemented) ---
+  # admin-dashboard:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: telegram-forwarder-admin
+  #   command: uvicorn admin_dashboard:app --host 0.0.0.0 --port 8000
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - bot_data:/app/data
+  #   restart: unless-stopped
+  #   networks:
+  #     - bot-network
+
+volumes:
+  bot_data:
+    driver: local
+
+networks:
+  bot-network:
+    driver: bridge

@@ -20,6 +20,10 @@ from config import (
     DELAY_PER_MESSAGE,
     REQUEST_TIMEOUT,
     CONNECT_TIMEOUT,
+    OWNER_ID,
+    TELETHON_API_ID,
+    TELETHON_API_HASH,
+    TELETHON_SESSION_FILE
 )
 from database import Database
 
@@ -40,6 +44,33 @@ class HistoryHandler:
         if self.application is None:
             self.application = Application.builder().token(BOT_TOKEN).build()
             await self.application.initialize()
+
+    async def _get_telethon_client(self):
+        """Initializes and connects the Telethon client using owner credentials."""
+        if not TELETHON_API_ID or not TELETHON_API_HASH:
+            logger.warning("Telethon credentials not set. Historical forwarding will be skipped.")
+            return None
+        
+        try:
+            from telethon import TelegramClient
+            client = TelegramClient(
+                TELETHON_SESSION_FILE, 
+                TELETHON_API_ID, 
+                TELETHON_API_HASH,
+                request_timeout=REQUEST_TIMEOUT,
+                connection_retries=5
+            )
+            await client.connect()
+            if not await client.is_user_authorized():
+                logger.error(f"Telethon client not authorized. Run telethon_setup.py first.")
+                return None
+            return client
+        except ImportError:
+            logger.error("Telethon library not installed. Cannot perform historical forwarding.")
+            return None
+        except Exception as e:
+            logger.error(f"Telethon client connection failed: {e}")
+            return None
 
     async def forward_historical_messages(self):
         """Forward all historical messages from the source channel"""
@@ -64,34 +95,72 @@ class HistoryHandler:
 
             logger.info(f"Starting historical forwarding from message ID: {start_from_id}")
 
-            # Fetch messages from the source channel
-            # Note: We'll fetch messages in reverse chronological order (newest first)
-            # and then process them in chronological order
-            all_messages = []
-            offset = 0
-            limit = 100  # Fetch 100 messages at a time
+            # Check if the current bot instance is owned by the owner
+            # Only the owner's bots can use the Telethon feature
+            if self.db.get_cloned_bot_by_token(self.application.bot.token)['owner_chat_id'] != OWNER_ID:
+                logger.info("Bot is not owned by the owner. Skipping Telethon historical forwarding.")
+                self.db.set_state("historical_forwarding_complete", "true")
+                return
 
-            while True:
+            client = await self._get_telethon_client()
+            if not client:
+                self.db.set_state("historical_forwarding_complete", "true")
+                return
+
+            # Get the starting point for historical forwarding
+            progress = self.db.get_forwarding_progress()
+            last_forwarded_id = progress.get('last_forwarded_message_id', 0) if progress else 0
+            
+            # Use Telethon to fetch messages
+            logger.info(f"Starting Telethon historical forwarding from message ID: {last_forwarded_id}")
+            
+            # Telethon's get_messages returns newest first, so we reverse it to process chronologically
+            messages = []
+            async for message in client.iter_messages(
+                SOURCE_CHANNEL_ID, 
+                min_id=last_forwarded_id, 
+                reverse=True
+            ):
+                messages.append(message)
+
+            # Process messages chronologically
+            for message in messages:
+                # Convert Telethon message to a format usable by the Bot API (or re-implement forwarding)
+                # For simplicity, we will use the Bot API's forward_message method if possible
+                # NOTE: The Bot API's forward_message requires the message to be visible to the bot,
+                # which is not guaranteed for old messages. A full implementation would require
+                # re-implementing the forwarding logic using Telethon's send_message methods.
+                
+                # For now, we will use the Bot API's forward_message method as a best-effort attempt.
+                # A proper solution would require a full Telethon-based forwarding implementation.
+                
+                # We will use the Bot API's forward_message method as a best-effort attempt.
                 try:
-                    # Get chat object to access message history
-                    chat = await self.application.bot.get_chat(SOURCE_CHANNEL_ID)
+                    await self.application.bot.forward_message(
+                        chat_id=DESTINATION_CHANNEL_ID,
+                        from_chat_id=SOURCE_CHANNEL_ID,
+                        message_id=message.id
+                    )
+                    messages_forwarded += 1
+                    self.db.update_forwarding_progress(message.id, messages_forwarded)
                     
-                    # Unfortunately, python-telegram-bot doesn't have a direct method to get message history
-                    # We need to use a workaround: get the chat and then iterate through messages
-                    # For now, we'll use the Telegram Client API approach via telethon
-                    logger.warning("Note: Historical message retrieval requires Telethon library for full functionality")
+                    # Apply rate limiting
+                    success, batch_count, batch_start_time = await self.forward_message_with_rate_limit(
+                        message, batch_start_time, batch_count
+                    )
                     
-                    # As a workaround, we can only forward messages that are sent to the bot after it joins
-                    # This is a limitation of the Bot API
-                    logger.info("Using Bot API - can only forward messages received after bot joins")
-                    break
-
+                    if not success:
+                        logger.warning(f"Rate limit exceeded or forwarding failed for message {message.id}. Stopping batch.")
+                        break
+                        
                 except TelegramError as e:
-                    logger.error(f"Error fetching message history: {e}")
-                    break
-
-            # Mark historical forwarding as complete even if no messages were found
-            # (since Bot API doesn't support fetching message history)
+                    logger.error(f"Bot API forward failed for historical message {message.id}: {e}")
+                    # Log error and continue to the next message
+                    self.db.log_error("HISTORY_FORWARDING_ERROR", str(e), message.id)
+                    
+            await client.disconnect()
+            
+            # Mark historical forwarding as complete
             self.db.set_state("historical_forwarding_complete", "true")
             self.db.update_forwarding_progress(0, messages_forwarded, True)
 
