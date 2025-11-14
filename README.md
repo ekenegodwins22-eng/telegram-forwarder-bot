@@ -159,19 +159,31 @@ The powerful historical forwarding feature requires the use of the Telethon libr
     ```ini
     TELETHON_API_ID=YOUR_API_ID
     TELETHON_API_HASH=YOUR_API_HASH
+TELETHON_SESSION_BASE64=YOUR_BASE64_STRING
     ```
 
-3.  **Generate Session File:** Run the dedicated setup script once. This will prompt you for your phone number and login code to create the `owner_telethon.session` file.
+3.  **Generate Session File:** Run the dedicated setup script once on a local machine (or Termux) to create the `owner_telethon.session` file. You will then convert this file to a Base64 string for cloud deployment.
     ```bash
     python telethon_setup.py
     ```
-    **IMPORTANT:** This file must be present and persistent in your deployment environment (e.g., in a Docker volume or persistent storage on your VPS/Railway).
+    **IMPORTANT:** For cloud deployment (like Railway), you must convert the generated `owner_telethon.session` file into a Base64 string and set it as the `TELETHON_SESSION_BASE64` environment variable. The bot will automatically decode it on startup.
 
 Once these steps are complete, any bot you clone (as the `OWNER_ID`) will automatically use these credentials to perform historical message forwarding. Bots cloned by other users will only perform real-time forwarding.
 
 The core forwarding logic (`forwarder_core.py`) supports Telethon for historical forwarding. However, managing the interactive login and session files for *multiple* cloned instances is complex.
 
 For now, the cloned bots will use the standard Bot API, which only forwards messages received *after* the cloned bot is launched.
+
+## Troubleshooting: Bot Not Forwarding Messages
+
+If your cloned bot is running but not forwarding messages, the problem is almost always **missing permissions** in the source channel.
+
+**Solution:**
+
+1.  **Add Bot as Admin:** Ensure the **forwarding bot** (the one you cloned, NOT the Manager Bot) is added as an **Administrator** to the **Source Channel**.
+2.  **Grant Permissions:** The bot must have the **"Post Messages"** or **"Read Channel Content"** permission enabled in the source channel's admin settings.
+
+Without these permissions, Telegram will not send the messages to the bot for forwarding.
 
 ## Support & Contributing
 

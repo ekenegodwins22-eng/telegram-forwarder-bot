@@ -36,6 +36,7 @@ If you plan to use the **Historical Forwarding** feature for your cloned bots, y
 | :--- | :--- | :--- |
 | `TELETHON_API_ID` | `your_api_id` | Get this from [my.telegram.org](https://my.telegram.org/). |
 | `TELETHON_API_HASH` | `your_api_hash` | Get this from [my.telegram.org](https://my.telegram.org/). |
+| `TELETHON_SESSION_BASE64` | `your_base64_string` | **Crucial for Historical Forwarding.** The Base64 encoded content of your `owner_telethon.session` file. |
 
 ## Step 3: Configure the Start Command
 
@@ -57,7 +58,7 @@ The Manager Bot is the single entry point for the entire system.
 python bot.py
 ```
 
-## Step 4: Telethon Session File (If using Historical Forwarding)
+## Step 4: Telethon Session File (If using Historical Forwarding) - The Base64 Method
 
 Since Railway is a non-interactive environment, you must generate the Telethon session file locally and ensure it is available to the deployed service.
 
@@ -66,7 +67,8 @@ Since Railway is a non-interactive environment, you must generate the Telethon s
     python telethon_setup.py
     ```
 2.  This will create the **`owner_telethon.session`** file.
-3.  **Ensure Persistence:** You must ensure this file is uploaded to a persistent volume or storage service that your Railway deployment can access. Without this file, historical forwarding will fail for your cloned bots.
+33.  **Convert to Base64:** Copy the entire content of the generated `owner_telethon.session` file and convert it to a Base64 string (e.g., using an online tool or a local command like `base64 owner_telethon.session`).
+4.  **Set Environment Variable:** Set the resulting Base64 string as the value for the `TELETHON_SESSION_BASE64` environment variable in your Railway project. The bot will automatically decode and use it on startup.oned bots.
 
 ## Step 5: Deploy
 

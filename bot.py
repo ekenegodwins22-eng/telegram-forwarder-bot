@@ -249,7 +249,8 @@ async def clone_confirm(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
         f"🎉 **Success!** Your new forwarding bot has been launched.\n\n"
         f"• **Instance ID:** `{bot_id}`\n"
         f"• **Status:** `Running`\n\n"
-        "The bot is now running in the background and will start forwarding messages from your source channel.",
+        "The bot is now running in the background and will start forwarding messages from your source channel.\n\n"
+        "**🚨 CRITICAL STEP:** You must now add the new bot as an **Administrator** to your **Source Channel** and grant it the **'Post Messages'** permission. Without this, it cannot read messages to forward.",
         parse_mode='Markdown'
     )
     

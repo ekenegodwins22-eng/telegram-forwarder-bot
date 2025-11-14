@@ -37,6 +37,7 @@ CONNECT_TIMEOUT = 10  # Timeout for connection in seconds
 TELETHON_API_ID = os.getenv("TELETHON_API_ID")
 TELETHON_API_HASH = os.getenv("TELETHON_API_HASH")
 TELETHON_SESSION_FILE = "owner_telethon.session"
+TELETHON_SESSION_BASE64 = os.getenv("TELETHON_SESSION_BASE64")
 
 # Owner Configuration
 OWNER_ID = int(os.getenv("OWNER_ID", "0")) # Your Telegram User ID (e.g., 123456789)

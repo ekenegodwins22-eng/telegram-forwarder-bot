@@ -8,6 +8,8 @@ import logging
 import asyncio
 import time
 import sys
+import base64
+import os
 from typing import Optional
 from telegram import Update
 from telegram.ext import Application, ContextTypes, MessageHandler, filters, CommandHandler
@@ -23,7 +25,8 @@ from config import (
     OWNER_ID,
     TELETHON_API_ID,
     TELETHON_API_HASH,
-    TELETHON_SESSION_FILE
+    TELETHON_SESSION_FILE,
+    TELETHON_SESSION_BASE64
 )
 from database import Database
 from history_handler import HistoryHandler
@@ -53,6 +56,19 @@ class ForwarderBotCore:
         bot_db_path = f"forwarder_bot_{self.config['id']}.db"
         self.db = Database(db_path=bot_db_path)
         
+                # Decode and save the session file if available (Owner only)
+        if TELETHON_SESSION_BASE64:
+            try:
+                session_data = base64.b64decode(TELETHON_SESSION_BASE64)
+                with open(TELETHON_SESSION_FILE, 'wb') as f:
+                    f.write(session_data)
+                logger.info(f"Instance {self.config['id']} successfully decoded and saved Telethon session file.")
+            except Exception as e:
+                logger.error(f"Instance {self.config['id']} failed to decode Telethon session file: {e}")
+                # Remove the file if decoding failed to prevent corrupted file use
+                if os.path.exists(TELETHON_SESSION_FILE):
+                    os.remove(TELETHON_SESSION_FILE)
+
         self.history_handler = HistoryHandler(self.db)
         self.application = None
         self.last_forward_time = 0
