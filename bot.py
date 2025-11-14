@@ -7,6 +7,7 @@ It uses the BotManager to control the lifecycle of the cloned bots.
 import logging
 import asyncio
 import re
+from typing import Optional
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
     Application,
