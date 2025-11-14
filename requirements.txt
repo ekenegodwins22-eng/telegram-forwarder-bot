@@ -1,0 +1,11 @@
+# Core dependencies
+python-telegram-bot==21.3
+python-dotenv==1.0.0
+
+# Admin Dashboard
+fastapi==0.104.1
+uvicorn==0.24.0
+
+# Optional: For historical message forwarding with full channel access
+# Uncomment the line below and run: pip install -r requirements.txt
+# telethon==1.35.0
